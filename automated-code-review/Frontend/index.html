@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated Code Review</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="header-content">
+                <h1>Hello, <span class="user-name">User</span></h1>
+                <h2>How can I help you today?</h2>
+            </div>
+        </header>
+        <main>
+            <div class="feature-cards">
+                <div class="feature-card">
+                    <h3>Paste your code</h3>
+                    <p>Enter your code for review</p>
+                    <span class="icon">📝</span>
+                </div>
+                <div class="feature-card">
+                    <h3>Analyze</h3>
+                    <p>AI-powered code analysis</p>
+                    <span class="icon">🔍</span>
+                </div>
+                <div class="feature-card">
+                    <h3>Get feedback</h3>
+                    <p>Receive detailed insights</p>
+                    <span class="icon">💡</span>
+                </div>
+                <div class="feature-card">
+                    <h3>Improve</h3>
+                    <p>Enhance your coding skills</p>
+                    <span class="icon">📈</span>
+                </div>
+            </div>
+            <form id="codeForm">
+                <textarea id="codeInput" placeholder="Paste your code here..."></textarea>
+                <button type="submit">Review Code</button>
+            </form>
+            <div id="result"></div>
+        </main>
+        <footer>
+            <p>AI may display inaccurate info, so double-check its responses. <a href="#">Your privacy and Automated Code Review</a></p>
+        </footer>
+    </div>
+    <script>
+        document.getElementById('codeForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const code = document.getElementById('codeInput').value;
+            const response = await fetch('/review', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ code })
+            });
+            const result = await response.json();
+            document.getElementById('result').textContent = JSON.stringify(result, null, 2);
+        });
+    </script>
+</body>
+</html>
